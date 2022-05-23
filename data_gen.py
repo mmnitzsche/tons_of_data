@@ -7,10 +7,6 @@ from random import random
 from datetime import datetime, timedelta, date
 
 
-date.today() - timedelta(days=2000)
-sampl = int(np.random.uniform(low=0, high=2000, size=(1,))[0])
-sampl
-
 
 def get_countries():
     global country
