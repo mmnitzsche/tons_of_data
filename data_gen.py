@@ -6,7 +6,7 @@ import numpy as np
 from random import random
 from datetime import datetime, timedelta, date
 
-
+# Modificaçãozinha...
 
 def get_countries():
     global country
