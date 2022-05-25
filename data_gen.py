@@ -6,7 +6,7 @@ import numpy as np
 from random import random
 from datetime import datetime, timedelta, date
 
-# Modificaçãozinha...
+
 
 def get_countries():
     global country
@@ -58,6 +58,8 @@ df_countries = cleaning_countries(df=countries)
 brand_list = get_companies()
 countries_values = df_countries['country'].tolist()
 
+
+# teste commmit
 
 # %%
 
