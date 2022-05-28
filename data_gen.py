@@ -107,7 +107,6 @@ clothes_list = [
 'watch',
 'wool hat']
 
-
 countries = get_countries()
 df_countries = cleaning_countries(df=countries)
 brand_list = get_companies()
@@ -121,16 +120,9 @@ for c in range(99999):
     clothes = random.choice(clothes_list)
     profit = round(random.uniform(1000,99999), 2)
 
-
-
     sales_df.append({'country':country,'companies':companies,'clothes':clothes,'profit':profit})
 
 
 sales_df = pd.DataFrame(sales_df)
 sales_df
   
-
-  
-# %%
-
-
