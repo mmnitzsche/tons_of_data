@@ -7,6 +7,15 @@ import random
 from datetime import datetime, timedelta, date
 
 
+cities_df = pd.read_excel('worldcities.xlsx').dropna()
+
+cities = cities_df.sort_values(by='population',ascending=False ).head(50)['city'].tolist()
+
+
+
+# %%
+
+
 def get_countries():
 
     url = 'https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)'
@@ -118,11 +127,25 @@ for c in range(99999):
     country = random.choice(countries_values)
     companies = random.choice(brand_list)
     clothes = random.choice(clothes_list)
-    profit = round(random.uniform(1000,99999), 2)
+    profit = (round(random.uniform(100,9999), 2) * round(random.uniform(0,9), 2))
+    city = cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist()[np.random.randint(0,3)]
 
-    sales_df.append({'country':country,'companies':companies,'clothes':clothes,'profit':profit})
+    sales_df.append({'country':country,'city':city,'companies':companies,'clothes':clothes,'profit':profit})
 
 
 sales_df = pd.DataFrame(sales_df)
+sales_df = sales_df.merge(df_countries).drop(columns='gdp')
+sales_df['rand_test'] = np.random.randint(1,10)
 sales_df
+
   
+
+# %%
+
+
+
+city = cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist()[np.random.randint(0,9)]
+city
+
+
+
