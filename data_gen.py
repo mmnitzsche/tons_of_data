@@ -6,14 +6,11 @@ import numpy as np
 import random
 from datetime import datetime, timedelta, date
 
+def get_worldcities():
+    cities_df = pd.read_excel('worldcities.xlsx').dropna()
 
-cities_df = pd.read_excel('worldcities.xlsx').dropna()
-
-cities = cities_df.sort_values(by='population',ascending=False ).head(50)['city'].tolist()
-
-
-
-# %%
+    # cities_df = cities_df.sort_values(by='population',ascending=False ).head(50)['city'].tolist()
+    return cities_df
 
 
 def get_countries():
@@ -48,6 +45,8 @@ def cleaning_countries(df):
     df_countries = df_countries[~df_countries['gdp'].isin(['','N/A'])].replace(r'\s+|\\n','', regex=True).replace(to_replace=",", value="", regex=True)
     df_countries['gdp'] = df_countries['gdp'].astype(int)
     df_countries  = df_countries.sort_values(by='gdp', ascending=False).head(15)
+    df_countries = df_countries.replace({'country': {'SouthKorea': 'South Korea', 'UnitedKingdom': 'United Kingdom', 'UnitedStates': 'United States'}})
+
     return df_countries
 
 
@@ -116,36 +115,26 @@ clothes_list = [
 'watch',
 'wool hat']
 
+
+cities_df = get_worldcities()
 countries = get_countries()
 df_countries = cleaning_countries(df=countries)
 brand_list = get_companies()
 countries_values = list(df_countries['country'].tolist())
 
+
 sales_df = []
 
-for c in range(99999):
+for c in range(999):
     country = random.choice(countries_values)
     companies = random.choice(brand_list)
     clothes = random.choice(clothes_list)
     profit = (round(random.uniform(100,9999), 2) * round(random.uniform(0,9), 2))
-    city = cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist()[np.random.randint(0,3)]
-
+    max_index = len(cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist())
+    city = cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist()[np.random.randint(0,max_index)]
     sales_df.append({'country':country,'city':city,'companies':companies,'clothes':clothes,'profit':profit})
 
 
 sales_df = pd.DataFrame(sales_df)
 sales_df = sales_df.merge(df_countries).drop(columns='gdp')
-sales_df['rand_test'] = np.random.randint(1,10)
 sales_df
-
-  
-
-# %%
-
-
-
-city = cities_df[cities_df['country'] == country].sort_values(by='population', ascending=False).head(10)['city'].tolist()[np.random.randint(0,9)]
-city
-
-
-
